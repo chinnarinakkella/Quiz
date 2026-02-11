@@ -146,8 +146,21 @@ function loadQuestion() {
         const btn = document.createElement("button");
         btn.classList.add("option");
 
-        const imageUrl = `https://picsum.photos/seed/${option}/600/400`;
+        const imageMap = {
+    "Manipur": "https://upload.wikimedia.org/wikipedia/commons/7/74/Loktak_Lake.jpg",
+    "Assam": "https://upload.wikimedia.org/wikipedia/commons/2/2e/Kaziranga_National_Park.jpg",
+    "Mizoram": "https://upload.wikimedia.org/wikipedia/commons/3/3b/Aizawl_city.jpg",
+    "Nagaland": "https://upload.wikimedia.org/wikipedia/commons/1/1b/Kohima.jpg",
+    "Shillong": "https://upload.wikimedia.org/wikipedia/commons/9/9b/Shillong_view.jpg",
+    "Aizawl": "https://upload.wikimedia.org/wikipedia/commons/3/3b/Aizawl_city.jpg",
+    "Guwahati": "https://upload.wikimedia.org/wikipedia/commons/5/54/Guwahati_city.jpg",
+    "Imphal": "https://upload.wikimedia.org/wikipedia/commons/6/6a/Imphal_city.jpg",
+    "Seven Sisters": "https://upload.wikimedia.org/wikipedia/commons/4/4f/Northeast_India_Map.jpg",
+    "Eight Brothers": "https://upload.wikimedia.org/wikipedia/commons/4/4f/Northeast_India_Map.jpg"
+};
 
+const imageUrl = imageMap[option] || 
+"https://upload.wikimedia.org/wikipedia/commons/4/4f/Northeast_India_Map.jpg";
         btn.innerHTML = `
             <img src="${imageUrl}">
             <div>${option}</div>

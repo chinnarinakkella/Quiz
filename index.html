@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>North East India Quiz</title>
+<title>Tourism in North East India Quiz</title>
 
 <style>
 body {
@@ -17,14 +17,13 @@ body {
     overflow: hidden;
 }
 
+/* Slide Animation */
 .quiz-container {
-    width: 800px;
+    width: 750px;
     max-width: 95%;
     background: rgba(0,0,0,0.25);
     padding: 30px;
-    border-radius: 12px;
-    text-align: center;
-    position: relative;
+    border-radius: 15px;
     animation: slideIn 0.5s ease;
 }
 
@@ -33,15 +32,19 @@ body {
     to { transform: translateX(0); opacity: 1; }
 }
 
+h2 {
+    margin-bottom: 25px;
+    font-size: 22px;
+}
+
 .option {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+    display: block;
     width: 100%;
     margin: 12px 0;
     padding: 10px;
     background: #144e75;
     border: 2px solid white;
+    border-radius: 10px;
     color: white;
     font-weight: 600;
     cursor: pointer;
@@ -49,64 +52,69 @@ body {
 }
 
 .option img {
-    width: 80px;
-    height: 60px;
+    width: 100%;
+    height: 120px;
     object-fit: cover;
-    border-radius: 6px;
+    border-radius: 8px;
+    margin-bottom: 8px;
 }
 
 .option:hover {
-    background: #1c6ea4;
+    transform: scale(1.02);
 }
 
 .correct {
     background: #28a745 !important;
+    color: white !important;
 }
 
 .wrong {
     background: #dc3545 !important;
+    color: white !important;
 }
 
 #nextBtn {
     display: none;
+    margin-top: 15px;
     padding: 10px 25px;
     background: orange;
     border: none;
-    cursor: pointer;
     font-weight: bold;
-    margin-top: 15px;
+    cursor: pointer;
+}
+
+.progress {
+    margin-bottom: 15px;
+    font-size: 14px;
 }
 
 .correct-display {
-    position: absolute;
-    bottom: 15px;
-    left: 20px;
-    background: rgba(0,0,0,0.6);
-    padding: 10px 15px;
-    border-left: 5px solid #28a745;
-    font-size: 14px;
-    display: none;
+    margin-top: 15px;
+    font-size: 15px;
+    color: #00ffcc;
+    text-align: left;
 }
 </style>
 </head>
 
 <body>
 
-<div class="quiz-container" id="container">
+<div class="quiz-container" id="quizBox">
+    <div class="progress" id="progress"></div>
     <h2 id="question"></h2>
     <div id="options"></div>
-    <button id="nextBtn">Next</button>
     <div class="correct-display" id="correctDisplay"></div>
+    <button id="nextBtn">Next</button>
 </div>
 
 <script>
 
 const questions = [
-{
-question:"Which state is known as the gateway to North East India?",
-options:["Manipur","Assam","Mizoram","Nagaland"],
-correct:1
-}
+{question:"Which state is known as the gateway to North East India?",options:["Manipur","Assam","Mizoram","Nagaland"],correct:1},
+{question:"North East India is popularly called:",options:["Eight Brothers","Seven Sisters","Seven Hills","Eastern States"],correct:1},
+{question:"The largest city in North East India is:",options:["Shillong","Aizawl","Guwahati","Imphal"],correct:2},
+{question:"Bihu festival is celebrated in:",options:["Manipur","Assam","Nagaland","Mizoram"],correct:1},
+{question:"Hornbill Festival is celebrated in:",options:["Nagaland","Tripura","Meghalaya","Manipur"],correct:0}
 ];
 
 let currentQuestion = 0;
@@ -115,32 +123,34 @@ let score = 0;
 const questionEl = document.getElementById("question");
 const optionsEl = document.getElementById("options");
 const nextBtn = document.getElementById("nextBtn");
+const progressEl = document.getElementById("progress");
 const correctDisplay = document.getElementById("correctDisplay");
-const container = document.getElementById("container");
+const quizBox = document.getElementById("quizBox");
 
 function loadQuestion() {
 
-    container.style.animation = "none";
-    void container.offsetWidth;
-    container.style.animation = "slideIn 0.5s ease";
+    quizBox.style.animation = "none";
+    void quizBox.offsetWidth;
+    quizBox.style.animation = "slideIn 0.5s ease";
 
     nextBtn.style.display = "none";
-    correctDisplay.style.display = "none";
     optionsEl.innerHTML = "";
+    correctDisplay.textContent = "";
 
     const q = questions[currentQuestion];
     questionEl.textContent = q.question;
+    progressEl.textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
 
     q.options.forEach((option, index) => {
 
         const btn = document.createElement("button");
         btn.classList.add("option");
 
-        const fileName = option.toLowerCase().replace(/ /g, "-");
+        const imageUrl = `https://source.unsplash.com/600x400/?${option}`;
 
         btn.innerHTML = `
-            <img src="images/${fileName}.jpg" alt="${option}">
-            <span>${option}</span>
+            <img src="${imageUrl}">
+            <div>${option}</div>
         `;
 
         btn.onclick = () => checkAnswer(btn, index);
@@ -160,9 +170,8 @@ function checkAnswer(button, index) {
         button.classList.add("wrong");
         allButtons[correctIndex].classList.add("correct");
 
-        correctDisplay.textContent =
-            `Correct Answer: ${questions[currentQuestion].options[correctIndex]}`;
-        correctDisplay.style.display = "block";
+        correctDisplay.textContent = "Correct Answer: " + 
+            questions[currentQuestion].options[correctIndex];
     }
 
     allButtons.forEach(btn => btn.disabled = true);
@@ -174,11 +183,11 @@ nextBtn.onclick = () => {
     if (currentQuestion < questions.length) {
         loadQuestion();
     } else {
-        questionEl.textContent =
-            `Quiz Completed! Final Score: ${score}`;
+        questionEl.textContent = `Quiz Completed! Final Score: ${score} / ${questions.length}`;
         optionsEl.innerHTML = "";
         nextBtn.style.display = "none";
-        correctDisplay.style.display = "none";
+        progressEl.textContent = "";
+        correctDisplay.textContent = "";
     }
 };
 

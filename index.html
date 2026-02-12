@@ -1,189 +1,199 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>India Travel Quiz</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>India Tourism Quiz</title>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background: linear-gradient(to bottom, #1e5f7a, #2a7f9e);
-      margin: 0;
-      padding: 0;
-      color: white;
-    }
+<style>
+body {
+  font-family: Arial;
+  text-align: center;
+  background: linear-gradient(to bottom,#1e5f7a,#2a7f9e);
+  margin:0;
+  color:white;
+}
 
-    h1 {
-      margin-top: 20px;
-    }
+.question-box {
+  width:95%;
+  max-width:800px;
+  margin:20px auto;
+  padding:20px;
+  background:rgba(0,0,0,0.3);
+  border-radius:12px;
+}
 
-    .question-box {
-      background: rgba(0,0,0,0.3);
-      width: 90%;
-      max-width: 700px;
-      margin: 30px auto;
-      padding: 20px;
-      border-radius: 12px;
-    }
+.options {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+  margin-top:20px;
+}
 
-    .options {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
-      margin-top: 20px;
-    }
+.option {
+  border:3px solid transparent;
+  border-radius:10px;
+  background:#ffffff20;
+  cursor:pointer;
+  transition:0.3s;
+}
 
-    .option {
-      cursor: pointer;
-      border: 3px solid transparent;
-      border-radius: 10px;
-      overflow: hidden;
-      transition: 0.3s;
-      background: #ffffff20;
-    }
+.option img {
+  width:100%;
+  height:130px;
+  object-fit:cover;
+}
 
-    .option img {
-      width: 100%;
-      height: 130px;
-      object-fit: cover;
-      display: block;
-    }
+.option p {
+  margin:8px 0;
+  font-weight:bold;
+}
 
-    .option:hover {
-      transform: scale(1.05);
-    }
+.correct { border-color:lime; }
+.wrong { border-color:red; }
 
-    .correct {
-      border-color: lime;
-    }
+#result { margin-top:15px; font-weight:bold; }
 
-    .wrong {
-      border-color: red;
-    }
-
-    #nextBtn {
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      display: none;
-      border: none;
-      border-radius: 6px;
-    }
-
-    #score {
-      margin-top: 15px;
-      font-size: 18px;
-    }
-  </style>
+#nextBtn {
+  margin-top:15px;
+  padding:10px 20px;
+  display:none;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+}
+</style>
 </head>
 
 <body>
 
-<h1>India Travel Quiz</h1>
+<h1>India Tourism Quiz</h1>
 
 <div class="question-box">
-  <h2 id="question"></h2>
-
-  <div class="options" id="options"></div>
-
-  <button id="nextBtn">Next Question</button>
-
-  <div id="score"></div>
+<h2 id="question"></h2>
+<div class="options" id="options"></div>
+<div id="result"></div>
+<button id="nextBtn">Next</button>
+<div id="score"></div>
 </div>
 
 <script>
 
 const quiz = [
-  {
-    question: "Which place is famous for the Taj Mahal?",
-    options: [
-      { img: "Images/goa.jpg", correct: false },
-      { img: "Images/tajmahal.jpg", correct: true },
-      { img: "Images/kerala.jpg", correct: false },
-      { img: "Images/shimla.jpg", correct: false }
-    ]
-  },
-  {
-    question: "Where is the Red Fort located?",
-    options: [
-      { img: "Images/redfort.jpg", correct: true },
-      { img: "Images/gangtok.jpg", correct: false },
-      { img: "Images/mawsynram.jpg", correct: false },
-      { img: "Images/kaziranga.jpg", correct: false }
-    ]
-  },
-  {
-    question: "Which state is known as the Gateway to North East India?",
-    options: [
-      { img: "Images/assam.jpg", correct: true },
-      { img: "Images/mizo.jpg", correct: false },
-      { img: "Images/tripura.jpg", correct: false },
-      { img: "Images/nagaland.jpg", correct: false }
-    ]
-  }
+
+{q:"1. Gateway to North East India?", correct:"assam", options:["manipur","assam","mizoram","nagaland"]},
+{q:"2. Living root bridges found in?", correct:"meghalaya", options:["nagaland","meghalaya","tripura","mizoram"]},
+{q:"3. Kaziranga is famous for?", correct:"kaziranga", options:["tiger","elephant","kaziranga","redpanda"]},
+{q:"4. Loktak Lake located in?", correct:"loktak", options:["loktak","assam","tripura","mizoram"]},
+{q:"5. Tawang Monastery in?", correct:"tawang", options:["sikkim","tawang","meghalaya","nagaland"]},
+{q:"6. Hornbill Festival celebrated in?", correct:"hornbill", options:["assam","manipur","hornbill","tripura"]},
+{q:"7. Bihu festival of?", correct:"bihu", options:["bihu","mizoram","tripura","meghalaya"]},
+{q:"8. Mawsynram is in?", correct:"mawsynram", options:["assam","mawsynram","sikkim","manipur"]},
+{q:"9. Ziro Valley located in?", correct:"ziro", options:["assam","ziro","nagaland","mizoram"]},
+{q:"10. Majuli famous as?", correct:"majuli", options:["majuli","lake","hillstation","desert"]},
+{q:"11. Manas National Park in?", correct:"manas", options:["tripura","manas","mizoram","manipur"]},
+{q:"12. Shillong capital of?", correct:"shillong", options:["assam","manipur","shillong","tripura"]},
+{q:"13. Gangtok capital of?", correct:"gangtok", options:["nagaland","gangtok","mizoram","tripura"]},
+{q:"14. Kamakhya Temple located in?", correct:"kamakhya", options:["kamakhya","aizawl","kohima","itanagar"]},
+{q:"15. Wangala Festival celebrated by?", correct:"garo", options:["khasi","garo","mizo","bodo"]},
+{q:"16. Namdapha National Park in?", correct:"namdapha", options:["namdapha","assam","meghalaya","manipur"]},
+{q:"17. Dzukou Valley located in?", correct:"dzukou", options:["mizoram","dzukou","tripura","assam"]},
+{q:"18. ILP required for?", correct:"arunachal_pradesh", options:["arunachal_pradesh","nagaland","mizoram","all"]},
+{q:"19. Sangai Festival celebrated in?", correct:"sangai", options:["assam","sangai","meghalaya","tripura"]},
+{q:"20. Meghalaya means?", correct:"meghalaya", options:["rivers","meghalaya","hills","valleys"]},
+
+{q:"21. Taj Mahal located in?", correct:"tajmahal", options:["delhi","jaipur","tajmahal","lucknow"]},
+{q:"22. Golden Triangle includes?", correct:"goldentriangle", options:["goldentriangle","mumbai","goa","chennai"]},
+{q:"23. Incredible India belongs to?", correct:"india", options:["nepal","india","srilanka","bhutan"]},
+{q:"24. Kerala famous for?", correct:"kerala", options:["deserts","kerala","snow","forest"]},
+{q:"25. Red Fort located in?", correct:"redfort", options:["agra","redfort","jaipur","hyderabad"]},
+{q:"26. Ajanta & Ellora in?", correct:"ajanta", options:["gujarat","ajanta","karnataka","tamilnadu"]},
+{q:"27. Goa famous for?", correct:"goa", options:["tea","goa","mountains","desert"]},
+{q:"28. Jim Corbett Park in?", correct:"corbett", options:["corbett","assam","kerala","odisha"]},
+{q:"29. Konark Sun Temple in?", correct:"konark", options:["gujarat","rajasthan","konark","punjab"]},
+{q:"30. Gateway of India located in?", correct:"gateaway", options:["gateaway","kolkata","chennai","kochi"]},
+{q:"31. Shimla capital of?", correct:"shimla", options:["uttarakhand","shimla","sikkim","goa"]},
+{q:"32. Darjeeling famous for?", correct:"darjeeling", options:["coffee","darjeeling","cotton","spices"]},
+{q:"33. Thar Desert in?", correct:"thar", options:["gujarat","thar","haryana","punjab"]},
+{q:"34. Khajuraho located in?", correct:"khajuraho", options:["khajuraho","uttarpradesh","gujarat","bihar"]},
+{q:"35. Hampi located in?", correct:"hampi", options:["kerala","hampi","telangana","ap"]},
+{q:"36. Valley of Flowers in?", correct:"valley", options:["valley","sikkim","hp","assam"]},
+{q:"37. Rann of Kutch in?", correct:"rann", options:["rann","rajasthan","punjab","maharashtra"]},
+{q:"38. Charminar located in?", correct:"charminar", options:["chennai","charminar","lucknow","bhopal"]},
+{q:"39. Largest state by area?", correct:"rajasthan", options:["maharashtra","mp","rajasthan","up"]},
+{q:"40. Eco-tourism promotes?", correct:"ecotourism", options:["industry","ecotourism","urban","mining"]}
+
 ];
-let currentQuestion = 0;
-let score = 0;
 
-const questionEl = document.getElementById("question");
-const optionsEl = document.getElementById("options");
-const nextBtn = document.getElementById("nextBtn");
-const scoreEl = document.getElementById("score");
+let current=0;
+let score=0;
 
-function loadQuestion() {
+const questionEl=document.getElementById("question");
+const optionsEl=document.getElementById("options");
+const resultEl=document.getElementById("result");
+const nextBtn=document.getElementById("nextBtn");
+const scoreEl=document.getElementById("score");
 
-  nextBtn.style.display = "none";
-  optionsEl.innerHTML = "";
+function format(name){
+  return name.replace(/_/g," ").replace(/\b\w/g,c=>c.toUpperCase());
+}
 
-  const current = quiz[currentQuestion];
-  questionEl.textContent = current.question;
+function loadQuestion(){
+  nextBtn.style.display="none";
+  resultEl.textContent="";
+  optionsEl.innerHTML="";
 
-  current.options.forEach(option => {
+  let data=quiz[current];
+  questionEl.textContent=data.q;
 
-    const div = document.createElement("div");
+  data.options.forEach(opt=>{
+    let div=document.createElement("div");
     div.classList.add("option");
 
-    const img = document.createElement("img");
-    img.src = option.img;
+    let img=document.createElement("img");
+    img.src="Images/"+opt+".jpg";
+
+    let label=document.createElement("p");
+    label.textContent=format(opt);
 
     div.appendChild(img);
+    div.appendChild(label);
 
-    div.addEventListener("click", () => {
+    div.onclick=()=>{
+      document.querySelectorAll(".option").forEach(o=>o.style.pointerEvents="none");
 
-      if (option.correct) {
+      if(opt===data.correct){
         div.classList.add("correct");
+        resultEl.textContent="Correct!";
         score++;
-      } else {
+      }else{
         div.classList.add("wrong");
+        resultEl.textContent="Wrong! Correct Answer: "+format(data.correct);
+        document.querySelectorAll(".option").forEach(o=>{
+          if(o.querySelector("p").textContent===format(data.correct)){
+            o.classList.add("correct");
+          }
+        });
       }
-
-      document.querySelectorAll(".option").forEach(o => {
-        o.style.pointerEvents = "none";
-      });
-
-      nextBtn.style.display = "inline-block";
-    });
+      nextBtn.style.display="inline-block";
+    };
 
     optionsEl.appendChild(div);
   });
 }
 
-nextBtn.addEventListener("click", () => {
-
-  currentQuestion++;
-
-  if (currentQuestion < quiz.length) {
+nextBtn.onclick=()=>{
+  current++;
+  if(current<quiz.length){
     loadQuestion();
-  } else {
-    questionEl.textContent = "Quiz Completed!";
-    optionsEl.innerHTML = "";
-    nextBtn.style.display = "none";
-    scoreEl.textContent = "Your Score: " + score + " / " + quiz.length;
+  }else{
+    questionEl.textContent="Quiz Completed!";
+    optionsEl.innerHTML="";
+    resultEl.textContent="";
+    nextBtn.style.display="none";
+    scoreEl.textContent="Your Score: "+score+" / 40";
   }
-});
+};
 
 loadQuestion();
 

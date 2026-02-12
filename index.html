@@ -81,47 +81,85 @@ body {
 
 const quiz = [
 
-{q:"1. Gateway to North East India?", correct:"assam", options:["manipur","assam","mizoram","nagaland"]},
-{q:"2. Living root bridges found in?", correct:"meghalaya", options:["nagaland","meghalaya","tripura","mizoram"]},
-{q:"3. Kaziranga National Park is famous for?", correct:"rhinoceros", options:["tiger","elephant","rhinoceros","redpanda"]},
-{q:"4. Loktak Lake located in?", correct:"manipur", options:["manipur","assam","tripura","mizoram"]},
-{q:"5. Tawang Monastery in?", correct:"arunachal_pradesh", options:["sikkim","arunachal_pradesh","meghalaya","nagaland"]},
-{q:"6. Hornbill Festival celebrated in?", correct:"nagaland", options:["assam","manipur","nagaland","tripura"]},
-{q:"7. Bihu festival of?", correct:"assam", options:["assam","mizoram","tripura","meghalaya"]},
-{q:"8. Mawsynram is in?", correct:"meghalaya", options:["assam","meghalaya","sikkim","manipur"]},
-{q:"9. Ziro Valley located in?", correct:"arunachal_pradesh", options:["assam","arunachal_pradesh","nagaland","mizoram"]},
-{q:"10. Majuli famous as?", correct:"majuli", options:["majuli","lake","hillstation","desert"]},
-{q:"11. Manas National Park in?", correct:"assam", options:["tripura","assam","mizoram","manipur"]},
-{q:"12. Shillong capital of?", correct:"meghalaya", options:["assam","manipur","meghalaya","tripura"]},
-{q:"13. Gangtok capital of?", correct:"sikkim", options:["nagaland","sikkim","mizoram","tripura"]},
-{q:"14. Kamakhya Temple located in?", correct:"guwahati", options:["guwahati","aizawl","kohima","itanagar"]},
-{q:"15. Wangala Festival celebrated by?", correct:"garo", options:["khasi","garo","mizo","bodo"]},
-{q:"16. Namdapha National Park in?", correct:"arunachal_pradesh", options:["arunachal_pradesh","assam","meghalaya","manipur"]},
-{q:"17. Dzukou Valley located in?", correct:"nagaland", options:["mizoram","nagaland","tripura","assam"]},
-{q:"18. ILP required for?", correct:"arunachal_pradesh", options:["arunachal_pradesh","nagaland","mizoram","sikkim"]},
-{q:"19. Sangai Festival celebrated in?", correct:"manipur", options:["assam","manipur","meghalaya","tripura"]},
-{q:"20. Meghalaya means?", correct:"clouds", options:["rivers","clouds","hills","valleys"]},
+{q:"1. Which state is known as the gateway to North East India?", correct:"assam", options:["manipur","assam","mizoram","nagaland"]},
 
-{q:"21. Taj Mahal located in?", correct:"agra", options:["delhi","jaipur","agra","lucknow"]},
-{q:"22. Golden Triangle includes?", correct:"delhi_agra_jaipur", options:["delhi_agra_jaipur","delhi_mumbai_kolkata","goa_mumbai_pune","chennai_bengaluru_hyderabad"]},
-{q:"23. Incredible India belongs to?", correct:"india", options:["nepal","india","srilanka","bhutan"]},
-{q:"24. Kerala famous for?", correct:"backwaters", options:["desert","backwaters","snow_peaks","forest_fires"]},
-{q:"25. Red Fort located in?", correct:"delhi", options:["agra","delhi","jaipur","hyderabad"]},
-{q:"26. Ajanta & Ellora in?", correct:"maharashtra", options:["gujarat","maharashtra","karnataka","tamilnadu"]},
-{q:"27. Goa famous for?", correct:"beaches", options:["tea","beaches","mountains","desert"]},
-{q:"28. Jim Corbett Park in?", correct:"uttarakhand", options:["uttarakhand","assam","kerala","odisha"]},
-{q:"29. Konark Sun Temple in?", correct:"odisha", options:["gujarat","rajasthan","odisha","punjab"]},
-{q:"30. Gateway of India located in?", correct:"mumbai", options:["mumbai","kolkata","chennai","kochi"]},
-{q:"31. Shimla capital of?", correct:"himachal_pradesh", options:["uttarakhand","himachal_pradesh","sikkim","goa"]},
-{q:"32. Darjeeling famous for?", correct:"tea", options:["coffee","tea","cotton","spices"]},
-{q:"33. Thar Desert in?", correct:"rajasthan", options:["gujarat","rajasthan","haryana","punjab"]},
-{q:"34. Khajuraho located in?", correct:"madhya_pradesh", options:["madhya_pradesh","uttar_pradesh","gujarat","bihar"]},
-{q:"35. Hampi located in?", correct:"karnataka", options:["kerala","karnataka","telangana","andhra_pradesh"]},
-{q:"36. Valley of Flowers in?", correct:"uttarakhand", options:["uttarakhand","sikkim","himachal_pradesh","assam"]},
-{q:"37. Rann of Kutch in?", correct:"gujarat", options:["gujarat","rajasthan","punjab","maharashtra"]},
-{q:"38. Charminar located in?", correct:"hyderabad", options:["chennai","hyderabad","lucknow","bhopal"]},
-{q:"39. Largest state by area?", correct:"rajasthan", options:["maharashtra","madhya_pradesh","rajasthan","uttar_pradesh"]},
-{q:"40. Eco-tourism promotes?", correct:"environmental_conservation", options:["industrial_growth","environmental_conservation","urbanization","mining"]}
+{q:"2. Living root bridges are found in:", correct:"meghalaya", options:["nagaland","meghalaya","tripura","mizoram"]},
+
+{q:"3. Kaziranga National Park is famous for:", correct:"rhinoceros", options:["tiger","elephant","rhinoceros","redpanda"]},
+
+{q:"4. Loktak Lake is located in:", correct:"manipur", options:["manipur","assam","tripura","mizoram"]},
+
+{q:"5. Tawang Monastery is in:", correct:"arunachal_pradesh", options:["sikkim","arunachal_pradesh","meghalaya","nagaland"]},
+
+{q:"6. Hornbill Festival is celebrated in:", correct:"nagaland", options:["assam","manipur","nagaland","tripura"]},
+
+{q:"7. Bihu is a major festival of:", correct:"assam", options:["assam","mizoram","tripura","meghalaya"]},
+
+{q:"8. The wettest place on earth, Mawsynram, is in:", correct:"meghalaya", options:["assam","meghalaya","sikkim","manipur"]},
+
+{q:"9. Ziro Valley is located in:", correct:"arunachal_pradesh", options:["assam","arunachal_pradesh","nagaland","mizoram"]},
+
+{q:"10. Majuli is famous as the:", correct:"largest_river_island", options:["largest_river_island","largest_lake","hill_station","desert_area"]},
+
+{q:"11. Manas National Park is located in:", correct:"assam", options:["tripura","assam","mizoram","manipur"]},
+
+{q:"12. Shillong is the capital of:", correct:"meghalaya", options:["assam","manipur","meghalaya","tripura"]},
+
+{q:"13. Gangtok is the capital of:", correct:"sikkim", options:["nagaland","sikkim","mizoram","tripura"]},
+
+{q:"14. Kamakhya Temple is located in:", correct:"guwahati", options:["guwahati","aizawl","kohima","itanagar"]},
+
+{q:"15. Wangala Festival is celebrated by the:", correct:"garo", options:["khasi","garo","mizo","bodo"]},
+
+{q:"16. Namdapha National Park is in:", correct:"arunachal_pradesh", options:["arunachal_pradesh","assam","meghalaya","manipur"]},
+
+{q:"17. Dzükou Valley is located in:", correct:"nagaland", options:["mizoram","nagaland","tripura","assam"]},
+
+{q:"18. Inner Line Permit (ILP) is required for visiting:", correct:"all_of_these", options:["arunachal_pradesh","nagaland","mizoram","all_of_these"]},
+
+{q:"19. Sangai Festival is celebrated in:", correct:"manipur", options:["assam","manipur","meghalaya","tripura"]},
+
+{q:"20. Meghalaya means:", correct:"land_of_clouds", options:["land_of_rivers","land_of_clouds","land_of_hills","land_of_valleys"]},
+
+{q:"21. The Taj Mahal is located in:", correct:"agra", options:["delhi","jaipur","agra","lucknow"]},
+
+{q:"22. The Golden Triangle includes:", correct:"delhi_agra_jaipur", options:["delhi_agra_jaipur","delhi_mumbai_kolkata","goa_mumbai_pune","chennai_bengaluru_hyderabad"]},
+
+{q:"23. 'Incredible India' is the tourism slogan of:", correct:"india", options:["nepal","india","srilanka","bhutan"]},
+
+{q:"24. Kerala is famous for its:", correct:"backwaters", options:["deserts","backwaters","snow_peaks","forest_fires"]},
+
+{q:"25. The Red Fort is located in:", correct:"delhi", options:["agra","delhi","jaipur","hyderabad"]},
+
+{q:"26. Ajanta and Ellora Caves are in:", correct:"maharashtra", options:["gujarat","maharashtra","karnataka","tamil_nadu"]},
+
+{q:"27. Goa is famous for its:", correct:"beaches", options:["tea_gardens","beaches","mountains","deserts"]},
+
+{q:"28. Jim Corbett National Park is in:", correct:"uttarakhand", options:["uttarakhand","assam","kerala","odisha"]},
+
+{q:"29. The Sun Temple at Konark is in:", correct:"odisha", options:["gujarat","rajasthan","odisha","punjab"]},
+
+{q:"30. Gateway of India is located in:", correct:"mumbai", options:["mumbai","kolkata","chennai","kochi"]},
+
+{q:"31. Shimla is the capital of:", correct:"himachal_pradesh", options:["uttarakhand","himachal_pradesh","sikkim","goa"]},
+
+{q:"32. Darjeeling is famous for:", correct:"tea", options:["coffee","tea","cotton","spices"]},
+
+{q:"33. The Thar Desert is located in:", correct:"rajasthan", options:["gujarat","rajasthan","haryana","punjab"]},
+
+{q:"34. Khajuraho Temples are located in:", correct:"madhya_pradesh", options:["madhya_pradesh","uttar_pradesh","gujarat","bihar"]},
+
+{q:"35. Hampi is located in:", correct:"karnataka", options:["kerala","karnataka","telangana","andhra_pradesh"]},
+
+{q:"36. The Valley of Flowers is located in:", correct:"uttarakhand", options:["uttarakhand","sikkim","himachal_pradesh","assam"]},
+
+{q:"37. Rann of Kutch is in:", correct:"gujarat", options:["gujarat","rajasthan","punjab","maharashtra"]},
+
+{q:"38. Charminar is located in:", correct:"hyderabad", options:["chennai","hyderabad","lucknow","bhopal"]},
+
+{q:"39. The largest state in India by area is:", correct:"rajasthan", options:["maharashtra","madhya_pradesh","rajasthan","uttar_pradesh"]},
+
+{q:"40. Eco-tourism mainly promotes:", correct:"environmental_conservation", options:["industrial_growth","environmental_conservation","urbanization","mining"]}
 
 ];
 

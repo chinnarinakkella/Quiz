@@ -1,211 +1,179 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Tourism in North East India Quiz</title>
+  <meta charset="UTF-8">
+  <title>India Travel Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f4f4f4;
+    }
 
-<style>
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #0e3c5d, #1c6ea4);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    color: white;
-    overflow: hidden;
-}
+    h1 {
+      margin-top: 20px;
+    }
 
-/* Slide Animation */
-.quiz-container {
-    width: 750px;
-    max-width: 95%;
-    background: rgba(0,0,0,0.25);
-    padding: 30px;
-    border-radius: 15px;
-    animation: slideIn 0.5s ease;
-}
+    .question-box {
+      background: white;
+      width: 90%;
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
 
-@keyframes slideIn {
-    from { transform: translateX(100%); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
-}
+    .options {
+      display: grid;
+      grid-template-columns: 1fr 1fr; /* 2 left 2 right */
+      gap: 15px;
+      margin-top: 20px;
+    }
 
-h2 {
-    margin-bottom: 25px;
-    font-size: 22px;
-}
+    .option {
+      cursor: pointer;
+      border: 3px solid transparent;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: 0.3s;
+      background: #eee;
+    }
 
-.option {
-    display: block;
-    width: 100%;
-    margin: 12px 0;
-    padding: 10px;
-    background: #144e75;
-    border: 2px solid white;
-    border-radius: 10px;
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.3s;
-}
+    .option img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+    }
 
-.option img {
-    width: 100%;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 8px;
-}
+    .option:hover {
+      transform: scale(1.05);
+    }
 
-.option:hover {
-    transform: scale(1.02);
-}
+    .correct {
+      border-color: green;
+    }
 
-.correct {
-    background: #28a745 !important;
-    color: white !important;
-}
+    .wrong {
+      border-color: red;
+    }
 
-.wrong {
-    background: #dc3545 !important;
-    color: white !important;
-}
+    #nextBtn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      display: none;
+    }
 
-#nextBtn {
-    display: none;
-    margin-top: 15px;
-    padding: 10px 25px;
-    background: orange;
-    border: none;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.progress {
-    margin-bottom: 15px;
-    font-size: 14px;
-}
-
-.correct-display {
-    margin-top: 15px;
-    font-size: 15px;
-    color: #00ffcc;
-    text-align: left;
-}
-</style>
+    #score {
+      font-size: 18px;
+      margin-top: 15px;
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="quiz-container" id="quizBox">
-    <div class="progress" id="progress"></div>
-    <h2 id="question"></h2>
-    <div id="options"></div>
-    <div class="correct-display" id="correctDisplay"></div>
-    <button id="nextBtn">Next</button>
+<h1>India Travel Quiz</h1>
+
+<div class="question-box">
+  <h2 id="question">Question here</h2>
+
+  <div class="options" id="options"></div>
+
+  <button id="nextBtn">Next Question</button>
+
+  <div id="score"></div>
 </div>
 
 <script>
+  const quiz = [
+    {
+      question: "Which place is famous for the Taj Mahal?",
+      options: [
+        { img: "Images/goa.jpg", correct: false },
+        { img: "Images/tajmahal.jpg", correct: true },
+        { img: "Images/kerala.jpg", correct: false },
+        { img: "Images/shimla.jpg", correct: false }
+      ]
+    },
+    {
+      question: "Where is the Red Fort located?",
+      options: [
+        { img: "Images/redfort.jpg", correct: true },
+        { img: "Images/gangtok.jpg", correct: false },
+        { img: "Images/mawsynram.jpg", correct: false },
+        { img: "Images/kaziranga.jpg", correct: false }
+      ]
+    },
+    {
+      question: "Which state is famous for backwaters?",
+      options: [
+        { img: "Images/rajasthan.jpg", correct: false },
+        { img: "Images/kerala.jpg", correct: true },
+        { img: "Images/sikkim.jpg", correct: false },
+        { img: "Images/assam.jpg", correct: false }
+      ]
+    }
+  ];
 
-const questions = [
-{question:"Which state is known as the gateway to North East India?",options:["Manipur","Assam","Mizoram","Nagaland"],correct:1},
-{question:"North East India is popularly called:",options:["Eight Brothers","Seven Sisters","Seven Hills","Eastern States"],correct:1},
-{question:"The largest city in North East India is:",options:["Shillong","Aizawl","Guwahati","Imphal"],correct:2},
-{question:"Bihu festival is celebrated in:",options:["Manipur","Assam","Nagaland","Mizoram"],correct:1},
-{question:"Hornbill Festival is celebrated in:",options:["Nagaland","Tripura","Meghalaya","Manipur"],correct:0}
-];
+  let currentQuestion = 0;
+  let score = 0;
 
-let currentQuestion = 0;
-let score = 0;
+  const questionEl = document.getElementById("question");
+  const optionsEl = document.getElementById("options");
+  const nextBtn = document.getElementById("nextBtn");
+  const scoreEl = document.getElementById("score");
 
-const questionEl = document.getElementById("question");
-const optionsEl = document.getElementById("options");
-const nextBtn = document.getElementById("nextBtn");
-const progressEl = document.getElementById("progress");
-const correctDisplay = document.getElementById("correctDisplay");
-const quizBox = document.getElementById("quizBox");
-
-function loadQuestion() {
-
-    quizBox.style.animation = "none";
-    void quizBox.offsetWidth;
-    quizBox.style.animation = "slideIn 0.5s ease";
-
+  function loadQuestion() {
     nextBtn.style.display = "none";
     optionsEl.innerHTML = "";
-    correctDisplay.textContent = "";
 
-    const q = questions[currentQuestion];
-    questionEl.textContent = q.question;
-    progressEl.textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+    const current = quiz[currentQuestion];
+    questionEl.textContent = current.question;
 
-    q.options.forEach((option, index) => {
+    current.options.forEach(option => {
+      const div = document.createElement("div");
+      div.classList.add("option");
 
-        const btn = document.createElement("button");
-        btn.classList.add("option");
+      const img = document.createElement("img");
+      img.src = option.img;
 
-        const imageMap = {
-    "Manipur": "https://upload.wikimedia.org/wikipedia/commons/7/74/Loktak_Lake.jpg",
-    "Assam": "https://upload.wikimedia.org/wikipedia/commons/2/2e/Kaziranga_National_Park.jpg",
-    "Mizoram": "https://upload.wikimedia.org/wikipedia/commons/3/3b/Aizawl_city.jpg",
-    "Nagaland": "https://upload.wikimedia.org/wikipedia/commons/1/1b/Kohima.jpg",
-    "Shillong": "https://upload.wikimedia.org/wikipedia/commons/9/9b/Shillong_view.jpg",
-    "Aizawl": "https://upload.wikimedia.org/wikipedia/commons/3/3b/Aizawl_city.jpg",
-    "Guwahati": "https://upload.wikimedia.org/wikipedia/commons/5/54/Guwahati_city.jpg",
-    "Imphal": "https://upload.wikimedia.org/wikipedia/commons/6/6a/Imphal_city.jpg",
-    "Seven Sisters": "https://upload.wikimedia.org/wikipedia/commons/4/4f/Northeast_India_Map.jpg",
-    "Eight Brothers": "https://upload.wikimedia.org/wikipedia/commons/4/4f/Northeast_India_Map.jpg"
-};
+      div.appendChild(img);
 
-const imageUrl = imageMap[option] || 
-"https://upload.wikimedia.org/wikipedia/commons/4/4f/Northeast_India_Map.jpg";
-        btn.innerHTML = `
-            <img src="${imageUrl}">
-            <div>${option}</div>
-        `;
+      div.addEventListener("click", () => {
+        if (option.correct) {
+          div.classList.add("correct");
+          score++;
+        } else {
+          div.classList.add("wrong");
+        }
 
-        btn.onclick = () => checkAnswer(btn, index);
-        optionsEl.appendChild(btn);
+        document.querySelectorAll(".option").forEach(o => {
+          o.style.pointerEvents = "none";
+        });
+
+        nextBtn.style.display = "inline-block";
+      });
+
+      optionsEl.appendChild(div);
     });
-}
+  }
 
-function checkAnswer(button, index) {
-
-    const correctIndex = questions[currentQuestion].correct;
-    const allButtons = Array.from(optionsEl.children);
-
-    if (index === correctIndex) {
-        button.classList.add("correct");
-        score++;
-    } else {
-        button.classList.add("wrong");
-        allButtons[correctIndex].classList.add("correct");
-
-        correctDisplay.textContent = "Correct Answer: " + 
-            questions[currentQuestion].options[correctIndex];
-    }
-
-    allButtons.forEach(btn => btn.disabled = true);
-    nextBtn.style.display = "inline-block";
-}
-
-nextBtn.onclick = () => {
+  nextBtn.addEventListener("click", () => {
     currentQuestion++;
-    if (currentQuestion < questions.length) {
-        loadQuestion();
+    if (currentQuestion < quiz.length) {
+      loadQuestion();
     } else {
-        questionEl.textContent = `Quiz Completed! Final Score: ${score} / ${questions.length}`;
-        optionsEl.innerHTML = "";
-        nextBtn.style.display = "none";
-        progressEl.textContent = "";
-        correctDisplay.textContent = "";
+      questionEl.textContent = "Quiz Completed!";
+      optionsEl.innerHTML = "";
+      nextBtn.style.display = "none";
+      scoreEl.textContent = "Your Score: " + score + " / " + quiz.length;
     }
-};
+  });
 
-loadQuestion();
-
+  loadQuestion();
 </script>
+
 </body>
 </html>

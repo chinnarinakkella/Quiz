@@ -86,7 +86,6 @@ button {
 <script>
 
 const quiz = [
-// ===== YOUR 50 QUESTIONS (UNCHANGED) =====
 {q:"1. Which state is known as the gateway to North East India?", correct:"assam", options:["manipur","assam","mizoram","nagaland"]},
 {q:"2. Living root bridges are found in:", correct:"meghalaya", options:["nagaland","meghalaya","tripura","mizoram"]},
 {q:"3. Kaziranga National Park is famous for:", correct:"rhinoceros", options:["tiger","elephant","rhinoceros","redpanda"]},
@@ -154,12 +153,21 @@ function format(name){
   return name.replace(/_/g," ").replace(/\b\w/g,c=>c.toUpperCase());
 }
 
-function speak(text){
-  let msg=new SpeechSynthesisUtterance(text);
-  msg.pitch=1.8;
-  msg.rate=1;
-  speechSynthesis.cancel();
-  speechSynthesis.speak(msg);
+function showAnswer(data, selected=null){
+  document.querySelectorAll(".option").forEach(div=>{
+    let text=div.querySelector("p").textContent;
+
+    if(text===format(data.correct)){
+      div.classList.add("correct");
+    }
+
+    if(selected && text===format(selected) && selected!==data.correct){
+      div.classList.add("wrong");
+    }
+  });
+
+  answerBtn.textContent=format(data.correct);
+  nextBtn.style.display="inline-block";
 }
 
 function loadQuestion(){
@@ -170,14 +178,6 @@ function loadQuestion(){
 
   let data=quiz[current];
   questionEl.textContent=data.q;
-
-  if(current>=48){
-    let text=data.q+". ";
-    data.options.forEach((o,i)=>{
-      text+="Option "+(i+1)+" "+format(o)+". ";
-    });
-    speak(text);
-  }
 
   data.options.forEach(opt=>{
     let div=document.createElement("div");
@@ -196,21 +196,9 @@ function loadQuestion(){
       if(answered) return;
       answered=true;
 
-      document.querySelectorAll(".option").forEach(o=>{
-        let txt=o.querySelector("p").textContent;
-        if(txt===format(data.correct)){
-          o.classList.add("correct");
-        }
-      });
+      if(opt===data.correct) score++;
 
-      if(opt!==data.correct){
-        div.classList.add("wrong");
-      } else {
-        score++;
-      }
-
-      answerBtn.textContent=format(data.correct);
-      nextBtn.style.display="inline-block";
+      showAnswer(data,opt);
     };
 
     optionsEl.appendChild(div);
@@ -218,8 +206,11 @@ function loadQuestion(){
 }
 
 answerBtn.onclick=()=>{
+  if(answered) return;
+  answered=true;
+
   let data=quiz[current];
-  answerBtn.textContent=format(data.correct);
+  showAnswer(data);
 };
 
 skipBtn.onclick=()=>{

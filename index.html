@@ -85,8 +85,6 @@ button {
 
 <script>
 
-/* ================= QUIZ DATABASE (50 QUESTIONS) ================= */
-
 const quiz = [
 
 {q:"1. Which state is known as the gateway to North East India?", correct:"assam", options:["manipur","assam","mizoram","nagaland"]},
@@ -99,6 +97,7 @@ const quiz = [
 {q:"8. The wettest place on earth, Mawsynram, is in:", correct:"meghalaya", options:["assam","meghalaya","sikkim","manipur"]},
 {q:"9. Ziro Valley is located in:", correct:"arunachal_pradesh", options:["assam","arunachal_pradesh","nagaland","mizoram"]},
 {q:"10. Majuli is famous as the:", correct:"largest_river_island", options:["largest_river_island","largest_lake","hillstation","desert_area"]},
+
 {q:"11. Manas National Park is located in:", correct:"assam", options:["tripura","assam","mizoram","manipur"]},
 {q:"12. Shillong is the capital of:", correct:"meghalaya", options:["assam","manipur","meghalaya","tripura"]},
 {q:"13. Gangtok is the capital of:", correct:"sikkim", options:["nagaland","sikkim","mizoram","tripura"]},
@@ -110,49 +109,41 @@ const quiz = [
 {q:"19. Sangai Festival is celebrated in:", correct:"manipur", options:["assam","manipur","meghalaya","tripura"]},
 {q:"20. Meghalaya means:", correct:"clouds", options:["rivers","clouds","hills","valleys"]},
 
-/* Remaining 28 questions skipped here for space */
-/* Keep your original questions 21–48 exactly same */
+{q:"21. The Taj Mahal is located in:", correct:"agra", options:["delhi","jaipur","agra","lucknow"]},
+{q:"22. The Golden Triangle includes:", correct:"delhi_agra_jaipur", options:["delhi_agra_jaipur","delhi_mumbai_kolkata","goa_mumbai_pune","chennai_bengaluru_hyderabad"]},
+{q:"23. 'Incredible India' is the tourism slogan of:", correct:"india", options:["nepal","india","srilanka","bhutan"]},
+{q:"24. Kerala is famous for its:", correct:"backwaters", options:["deserts","backwaters","snow_peaks","forest_fires"]},
+{q:"25. The Red Fort is located in:", correct:"delhi", options:["agra","delhi","jaipur","hyderabad"]},
+{q:"26. Ajanta and Ellora Caves are in:", correct:"maharashtra", options:["gujarat","maharashtra","karnataka","tamilnadu"]},
+{q:"27. Goa is famous for its:", correct:"beaches", options:["tea","beaches","mountains","deserts"]},
+{q:"28. Jim Corbett National Park is in:", correct:"uttarakhand", options:["uttarakhand","assam","kerala","odisha"]},
+{q:"29. The Sun Temple at Konark is in:", correct:"odisha", options:["gujarat","rajasthan","odisha","punjab"]},
+{q:"30. Gateway of India is located in:", correct:"mumbai", options:["mumbai","kolkata","chennai","kochi"]},
 
-/* ========== NEW QUESTION 49 ========== */
-{
-q:"49. Why should we not make loud noises in wildlife areas?",
-correct:"get_scared",
-options:["get_sleep","get_scared","get_dance","get_laugh"]
-},
+{q:"31. Shimla is the capital of:", correct:"himachal_pradesh", options:["uttarakhand","himachal_pradesh","sikkim","goa"]},
+{q:"32. Darjeeling is famous for:", correct:"tea", options:["coffee","tea","cotton","spices"]},
+{q:"33. The Thar Desert is located in:", correct:"rajasthan", options:["gujarat","rajasthan","haryana","punjab"]},
+{q:"34. Khajuraho Temples are located in:", correct:"madhya_pradesh", options:["madhya_pradesh","uttar_pradesh","gujarat","bihar"]},
+{q:"35. Hampi is located in:", correct:"karnataka", options:["kerala","karnataka","telangana","andhra_pradesh"]},
+{q:"36. The Valley of Flowers is located in:", correct:"uttarakhand", options:["uttarakhand","sikkim","himachal_pradesh","assam"]},
+{q:"37. Rann of Kutch is in:", correct:"gujarat", options:["gujarat","rajasthan","punjab","maharashtra"]},
+{q:"38. Charminar is located in:", correct:"hyderabad", options:["chennai","hyderabad","lucknow","bhopal"]},
+{q:"39. The largest state in India by area is:", correct:"rajasthan", options:["maharashtra","madhya_pradesh","rajasthan","uttar_pradesh"]},
+{q:"40. Eco-tourism mainly promotes:", correct:"environmental_conservation", options:["industrial_growth","environmental_conservation","urbanization","mining"]},
 
-/* ========== NEW QUESTION 50 ========== */
-{
-q:"50. What should we do when we see wild animals?",
-correct:"watch",
-options:["feed","chase","touch","watch"]
-}
+{q:"41. 'Dosa' is a traditional dish from which Indian state?", correct:"tamilnadu", options:["punjab","tamilnadu","gujarat","rajasthan"]},
+{q:"42. The main ingredient of 'Sarson ka Saag' is:", correct:"mustard_leaves", options:["spinach","mustard_leaves","cabbage","fenugreek"]},
+{q:"43. 'Rogan Josh' is a famous dish from:", correct:"kashmir", options:["goa","kerala","kashmir","bihar"]},
+{q:"44. 'Pani Puri' is also commonly known as:", correct:"golgappa", options:["vada_pav","golgappa","dhokla","kachori"]},
+{q:"45. The main ingredient of 'Idli' is:", correct:"rice_urad_batter", options:["wheat_flour","rice_urad_batter","corn_flour","gram_flour"]},
+{q:"46. 'Hyderabadi Biryani' is famous for using:", correct:"dum_cooking", options:["only_vegetables","raw_rice_separate","dum_cooking","steaming"]},
+{q:"47. 'Dhokla' is a popular snack from:", correct:"gujarat", options:["maharashtra","gujarat","punjab","odisha"]},
+{q:"48. 'Litti Chokha' is a traditional dish of:", correct:"bihar", options:["west_bengal","bihar","assam","haryana"]},
+
+{q:"49. Why should we not make loud noises in wildlife areas?", correct:"get_scared", options:["get_sleep","get_scared","get_dance","get_laugh"]},
+{q:"50. What should we do when we see wild animals?", correct:"watch", options:["feed","chase","touch","watch"]}
 
 ];
-
-/* ================= VOICE SETUP ================= */
-
-let childVoice = null;
-
-function loadVoices() {
-  const voices = speechSynthesis.getVoices();
-  childVoice = voices.find(v =>
-    v.name.toLowerCase().includes("female") ||
-    v.name.toLowerCase().includes("google")
-  ) || voices[0];
-}
-
-speechSynthesis.onvoiceschanged = loadVoices;
-
-function speak(text){
-  const msg = new SpeechSynthesisUtterance(text);
-  msg.voice = childVoice;
-  msg.rate = 1;
-  msg.pitch = 1.8;  // child-like
-  speechSynthesis.cancel();
-  speechSynthesis.speak(msg);
-}
-
-/* ================= QUIZ LOGIC ================= */
 
 let current=0;
 let score=0;
@@ -169,6 +160,15 @@ function format(name){
   return name.replace(/_/g," ").replace(/\b\w/g,c=>c.toUpperCase());
 }
 
+/* Child voice only for Q49 & Q50 */
+function speak(text){
+  let msg=new SpeechSynthesisUtterance(text);
+  msg.pitch=1.8;
+  msg.rate=1;
+  speechSynthesis.cancel();
+  speechSynthesis.speak(msg);
+}
+
 function loadQuestion(){
   answered=false;
   nextBtn.style.display="none";
@@ -178,13 +178,12 @@ function loadQuestion(){
   let data=quiz[current];
   questionEl.textContent=data.q;
 
-  // 🔊 Speak only last 2 questions
-  if(current >= quiz.length-2){
-    let speakText=data.q + ". ";
-    data.options.forEach((opt,i)=>{
-      speakText+="Option "+(i+1)+": "+format(opt)+". ";
+  if(current>=48){
+    let text=data.q+". ";
+    data.options.forEach((o,i)=>{
+      text+="Option "+(i+1)+" "+format(o)+". ";
     });
-    speak(speakText);
+    speak(text);
   }
 
   data.options.forEach(opt=>{
@@ -207,7 +206,7 @@ function loadQuestion(){
       if(opt===data.correct){
         div.classList.add("correct");
         score++;
-      } else {
+      }else{
         div.classList.add("wrong");
       }
 
@@ -245,7 +244,6 @@ function finishQuiz(){
 }
 
 loadQuestion();
-
 </script>
 
 </body>

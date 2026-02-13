@@ -49,8 +49,8 @@ body {
   font-weight:bold;
 }
 
-.correct { border-color:lime; }
-.wrong { border-color:red; }
+.correct { border-color:lime !important; }
+.wrong { border-color:red !important; }
 
 button {
   margin:10px;
@@ -153,9 +153,13 @@ function format(name){
   return name.replace(/_/g," ").replace(/\b\w/g,c=>c.toUpperCase());
 }
 
-function showAnswer(data, selected=null){
-  document.querySelectorAll(".option").forEach(div=>{
-    let text=div.querySelector("p").textContent;
+function revealAnswer(data, selected=null){
+  const allOptions=document.querySelectorAll(".option");
+
+  allOptions.forEach(div=>{
+    div.classList.remove("correct","wrong");
+
+    const text=div.querySelector("p").textContent;
 
     if(text===format(data.correct)){
       div.classList.add("correct");
@@ -176,17 +180,17 @@ function loadQuestion(){
   answerBtn.textContent="Answer";
   optionsEl.innerHTML="";
 
-  let data=quiz[current];
+  const data=quiz[current];
   questionEl.textContent=data.q;
 
   data.options.forEach(opt=>{
-    let div=document.createElement("div");
+    const div=document.createElement("div");
     div.className="option";
 
-    let img=document.createElement("img");
+    const img=document.createElement("img");
     img.src="Images/"+opt+".jpg";
 
-    let label=document.createElement("p");
+    const label=document.createElement("p");
     label.textContent=format(opt);
 
     div.appendChild(img);
@@ -198,7 +202,7 @@ function loadQuestion(){
 
       if(opt===data.correct) score++;
 
-      showAnswer(data,opt);
+      revealAnswer(data,opt);
     };
 
     optionsEl.appendChild(div);
@@ -209,8 +213,8 @@ answerBtn.onclick=()=>{
   if(answered) return;
   answered=true;
 
-  let data=quiz[current];
-  showAnswer(data);
+  const data=quiz[current];
+  revealAnswer(data);
 };
 
 skipBtn.onclick=()=>{

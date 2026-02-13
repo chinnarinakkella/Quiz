@@ -49,9 +49,8 @@ body {
   font-weight:bold;
 }
 
-.selected { border-color: yellow; }
-.correct { border-color: lime; }
-.wrong { border-color: red; }
+.correct { border-color:lime; }
+.wrong { border-color:red; }
 
 button {
   margin:10px;
@@ -137,115 +136,85 @@ const quiz = [
 {q:"48. 'Litti Chokha' is a traditional dish of:", correct:"bihar", options:["west_bengal","bihar","assam","haryana"]}
 ];
 
-let current = 0;
-let score = 0;
-let selectedOption = null;
-let answered = false;
+let current=0;
+let score=0;
+let answered=false;
 
-const questionEl = document.getElementById("question");
-const optionsEl = document.getElementById("options");
-const nextBtn = document.getElementById("nextBtn");
-const answerBtn = document.getElementById("answerBtn");
-const skipBtn = document.getElementById("skipBtn");
-const scoreEl = document.getElementById("score");
+const questionEl=document.getElementById("question");
+const optionsEl=document.getElementById("options");
+const nextBtn=document.getElementById("nextBtn");
+const answerBtn=document.getElementById("answerBtn");
+const skipBtn=document.getElementById("skipBtn");
+const scoreEl=document.getElementById("score");
 
 function format(name){
   return name.replace(/_/g," ").replace(/\b\w/g,c=>c.toUpperCase());
 }
 
 function loadQuestion(){
-  selectedOption = null;
-  answered = false;
-  nextBtn.style.display = "none";
-  answerBtn.textContent = "Answer";
-  optionsEl.innerHTML = "";
+  answered=false;
+  nextBtn.style.display="none";
+  answerBtn.textContent="Answer";
+  optionsEl.innerHTML="";
 
-  let data = quiz[current];
-  questionEl.textContent = data.q;
+  let data=quiz[current];
+  questionEl.textContent=data.q;
 
   data.options.forEach(opt=>{
-    let div = document.createElement("div");
-    div.className = "option";
+    let div=document.createElement("div");
+    div.className="option";
 
-    let img = document.createElement("img");
-    img.src = "Images/" + opt + ".jpg";
+    let img=document.createElement("img");
+    img.src="Images/"+opt+".jpg";
 
-    let label = document.createElement("p");
-    label.textContent = format(opt);
+    let label=document.createElement("p");
+    label.textContent=format(opt);
 
     div.appendChild(img);
     div.appendChild(label);
 
-    div.onclick = ()=>{
+    div.onclick=()=>{
       if(answered) return;
+      answered=true;
 
-      document.querySelectorAll(".option").forEach(o=>{
-        o.classList.remove("selected");
-      });
+      if(opt===data.correct){
+        div.classList.add("correct");
+        score++;
+      } else {
+        div.classList.add("wrong");
+      }
 
-      div.classList.add("selected");
-      selectedOption = opt;
+      nextBtn.style.display="inline-block";
     };
 
     optionsEl.appendChild(div);
   });
 }
 
-answerBtn.onclick = ()=>{
-  if(answered) return;
-  answered = true;
-
-  let data = quiz[current];
-
-  document.querySelectorAll(".option").forEach(div=>{
-    let text = div.querySelector("p").textContent;
-
-    div.classList.remove("selected");
-
-    if(text === format(data.correct)){
-      div.classList.add("correct");
-    }
-
-    if(selectedOption &&
-       text === format(selectedOption) &&
-       selectedOption !== data.correct){
-      div.classList.add("wrong");
-    }
-  });
-
-  if(selectedOption === data.correct){
-    score++;
-  }
-
-  answerBtn.textContent = format(data.correct);
-  nextBtn.style.display = "inline-block";
+answerBtn.onclick=()=>{
+  let data=quiz[current];
+  answerBtn.textContent=format(data.correct);
 };
 
-skipBtn.onclick = ()=>{
+skipBtn.onclick=()=>{
   current++;
-  if(current < quiz.length){
-    loadQuestion();
-  } else {
-    finishQuiz();
-  }
+  if(current<quiz.length) loadQuestion();
+  else finishQuiz();
 };
 
-nextBtn.onclick = ()=>{
+nextBtn.onclick=()=>{
   current++;
-  if(current < quiz.length){
-    loadQuestion();
-  } else {
-    finishQuiz();
-  }
+  if(current<quiz.length) loadQuestion();
+  else finishQuiz();
 };
 
 function finishQuiz(){
-  questionEl.textContent = "Quiz Completed!";
-  optionsEl.innerHTML = "";
-  answerBtn.style.display = "none";
-  skipBtn.style.display = "none";
-  nextBtn.style.display = "none";
-  scoreEl.textContent = "Your Score: " + score + " / " + quiz.length;
+  questionEl.textContent="Quiz Completed!";
+  optionsEl.innerHTML="";
+  answerBtn.style.display="none";
+  skipBtn.style.display="none";
+  nextBtn.style.display="none";
+  scoreEl.textContent="Your Score: "+score+" / "+quiz.length;
 }
 
 loadQuestion();

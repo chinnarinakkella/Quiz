@@ -107,6 +107,7 @@ const quiz = [
 {q:"18. Inner Line Permit (ILP) is required for visiting:", correct:"all_of_these", options:["arunachal_pradesh","nagaland","mizoram","all_of_these"]},
 {q:"19. Sangai Festival is celebrated in:", correct:"manipur", options:["assam","manipur","meghalaya","tripura"]},
 {q:"20. Meghalaya means:", correct:"clouds", options:["rivers","clouds","hills","valleys"]},
+
 {q:"21. The Taj Mahal is located in:", correct:"agra", options:["delhi","jaipur","agra","lucknow"]},
 {q:"22. The Golden Triangle includes:", correct:"delhi_agra_jaipur", options:["delhi_agra_jaipur","delhi_mumbai_kolkata","goa_mumbai_pune","chennai_bengaluru_hyderabad"]},
 {q:"23. 'Incredible India' is the tourism slogan of:", correct:"india", options:["nepal","india","srilanka","bhutan"]},
@@ -117,6 +118,7 @@ const quiz = [
 {q:"28. Jim Corbett National Park is in:", correct:"uttarakhand", options:["uttarakhand","assam","kerala","odisha"]},
 {q:"29. The Sun Temple at Konark is in:", correct:"odisha", options:["gujarat","rajasthan","odisha","punjab"]},
 {q:"30. Gateway of India is located in:", correct:"mumbai", options:["mumbai","kolkata","chennai","kochi"]},
+
 {q:"31. Shimla is the capital of:", correct:"himachal_pradesh", options:["uttarakhand","himachal_pradesh","sikkim","goa"]},
 {q:"32. Darjeeling is famous for:", correct:"tea", options:["coffee","tea","cotton","spices"]},
 {q:"33. The Thar Desert is located in:", correct:"rajasthan", options:["gujarat","rajasthan","haryana","punjab"]},
@@ -127,6 +129,7 @@ const quiz = [
 {q:"38. Charminar is located in:", correct:"hyderabad", options:["chennai","hyderabad","lucknow","bhopal"]},
 {q:"39. The largest state in India by area is:", correct:"rajasthan", options:["maharashtra","madhya_pradesh","rajasthan","uttar_pradesh"]},
 {q:"40. Eco-tourism mainly promotes:", correct:"environmental_conservation", options:["industrial_growth","environmental_conservation","urbanization","mining"]},
+
 {q:"41. 'Dosa' is a traditional dish from which Indian state?", correct:"tamilnadu", options:["punjab","tamilnadu","gujarat","rajasthan"]},
 {q:"42. The main ingredient of 'Sarson ka Saag' is:", correct:"mustard_leaves", options:["spinach","mustard_leaves","cabbage","fenugreek"]},
 {q:"43. 'Rogan Josh' is a famous dish from:", correct:"kashmir", options:["goa","kerala","kashmir","bihar"]},
@@ -188,9 +191,9 @@ function loadQuestion(){
 }
 
 answerBtn.onclick = ()=>{
-  if(answered || !selectedOption) return;
-
+  if(answered) return;
   answered = true;
+
   let data = quiz[current];
 
   document.querySelectorAll(".option").forEach(o=>{
@@ -200,7 +203,9 @@ answerBtn.onclick = ()=>{
       o.classList.add("correct");
     }
 
-    if(text === format(selectedOption) && selectedOption !== data.correct){
+    if(selectedOption &&
+       text === format(selectedOption) &&
+       selectedOption !== data.correct){
       o.classList.add("wrong");
     }
   });

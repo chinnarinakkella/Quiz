@@ -86,6 +86,8 @@ button {
 <script>
 
 const quiz = [
+
+// ----- YOUR 50 QUESTIONS (UNCHANGED) -----
 {q:"1. Which state is known as the gateway to North East India?", correct:"assam", options:["manipur","assam","mizoram","nagaland"]},
 {q:"2. Living root bridges are found in:", correct:"meghalaya", options:["nagaland","meghalaya","tripura","mizoram"]},
 {q:"3. Kaziranga National Park is famous for:", correct:"rhinoceros", options:["tiger","elephant","rhinoceros","redpanda"]},
@@ -136,6 +138,7 @@ const quiz = [
 {q:"48. 'Litti Chokha' is a traditional dish of:", correct:"bihar", options:["west_bengal","bihar","assam","haryana"]},
 {q:"49. Why should we not make loud noises in wildlife areas?", correct:"get_scared", options:["get_sleep","get_scared","get_dance","get_laugh"]},
 {q:"50. What should we do when we see wild animals?", correct:"watch", options:["feed","chase","touch","watch"]}
+
 ];
 
 let current=0;
@@ -153,12 +156,27 @@ function format(name){
   return name.replace(/_/g," ").replace(/\b\w/g,c=>c.toUpperCase());
 }
 
+/* CHILD VOICE FUNCTION */
+function speakChildVoice(data){
+  let text=data.q + ". ";
+  data.options.forEach((opt,i)=>{
+    text += "Option " + (i+1) + " " + format(opt) + ". ";
+  });
+
+  const msg = new SpeechSynthesisUtterance(text);
+  msg.pitch = 1.9;   // Higher pitch
+  msg.rate = 1;
+  msg.lang = "en-US";
+
+  speechSynthesis.cancel();
+  speechSynthesis.speak(msg);
+}
+
 function revealAnswer(data, selected=null){
   const allOptions=document.querySelectorAll(".option");
 
   allOptions.forEach(div=>{
     div.classList.remove("correct","wrong");
-
     const text=div.querySelector("p").textContent;
 
     if(text===format(data.correct)){
@@ -183,6 +201,11 @@ function loadQuestion(){
   const data=quiz[current];
   questionEl.textContent=data.q;
 
+  /* Speak only for Q49 & Q50 */
+  if(current >= 48){
+    speakChildVoice(data);
+  }
+
   data.options.forEach(opt=>{
     const div=document.createElement("div");
     div.className="option";
@@ -201,7 +224,6 @@ function loadQuestion(){
       answered=true;
 
       if(opt===data.correct) score++;
-
       revealAnswer(data,opt);
     };
 
@@ -212,9 +234,7 @@ function loadQuestion(){
 answerBtn.onclick=()=>{
   if(answered) return;
   answered=true;
-
-  const data=quiz[current];
-  revealAnswer(data);
+  revealAnswer(quiz[current]);
 };
 
 skipBtn.onclick=()=>{
@@ -230,6 +250,7 @@ nextBtn.onclick=()=>{
 };
 
 function finishQuiz(){
+  speechSynthesis.cancel();
   questionEl.textContent="Quiz Completed!";
   optionsEl.innerHTML="";
   answerBtn.style.display="none";
@@ -239,6 +260,7 @@ function finishQuiz(){
 }
 
 loadQuestion();
+
 </script>
 
 </body>

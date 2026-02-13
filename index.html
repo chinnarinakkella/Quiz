@@ -61,12 +61,6 @@ button {
   font-weight:bold;
 }
 
-#answerBox {
-  margin-top:10px;
-  font-size:18px;
-  font-weight:bold;
-}
-
 #score {
   margin-top:15px;
   font-weight:bold;
@@ -81,8 +75,6 @@ button {
 <div class="question-box">
 <h2 id="question"></h2>
 <div class="options" id="options"></div>
-
-<div id="answerBox"></div>
 
 <button id="answerBtn">Answer</button>
 <button id="skipBtn">Skip</button>
@@ -155,7 +147,6 @@ const nextBtn = document.getElementById("nextBtn");
 const answerBtn = document.getElementById("answerBtn");
 const skipBtn = document.getElementById("skipBtn");
 const scoreEl = document.getElementById("score");
-const answerBox = document.getElementById("answerBox");
 
 function format(name){
   return name.replace(/_/g," ").replace(/\b\w/g,c=>c.toUpperCase());
@@ -165,8 +156,7 @@ function loadQuestion(){
   selectedOption = null;
   answered = false;
   nextBtn.style.display = "none";
-  answerBox.textContent = "";
-  answerBtn.style.display = "inline-block";
+  answerBtn.textContent = "Answer";
   optionsEl.innerHTML = "";
 
   let data = quiz[current];
@@ -187,9 +177,7 @@ function loadQuestion(){
 
     div.onclick = ()=>{
       if(answered) return;
-      document.querySelectorAll(".option").forEach(o=>{
-        o.style.borderColor="transparent";
-      });
+      document.querySelectorAll(".option").forEach(o=>o.style.borderColor="transparent");
       div.style.borderColor="yellow";
       selectedOption = opt;
     };
@@ -204,28 +192,25 @@ answerBtn.onclick = ()=>{
 
   let data = quiz[current];
 
-  document.querySelectorAll(".option").forEach(o=>{
-    let text = o.querySelector("p").textContent;
+  if(selectedOption){
+    document.querySelectorAll(".option").forEach(div=>{
+      let text = div.querySelector("p").textContent;
 
-    if(text === format(data.correct)){
-      o.classList.add("correct");
+      if(text === format(data.correct)){
+        div.classList.add("correct");
+      }
+
+      if(text === format(selectedOption) && selectedOption !== data.correct){
+        div.classList.add("wrong");
+      }
+    });
+
+    if(selectedOption === data.correct){
+      score++;
     }
-
-    if(selectedOption &&
-       text === format(selectedOption) &&
-       selectedOption !== data.correct){
-      o.classList.add("wrong");
-    }
-  });
-
-  if(selectedOption === data.correct){
-    score++;
   }
 
-  // Show correct answer in place of Answer button
-  answerBox.textContent = "Correct Answer: " + format(data.correct);
-  answerBtn.style.display = "none";
-
+  answerBtn.textContent = format(data.correct);
   nextBtn.style.display = "inline-block";
 };
 
@@ -253,7 +238,6 @@ function finishQuiz(){
   answerBtn.style.display = "none";
   skipBtn.style.display = "none";
   nextBtn.style.display = "none";
-  answerBox.textContent = "";
   scoreEl.textContent = "Your Score: " + score + " / " + quiz.length;
 }
 

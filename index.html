@@ -86,7 +86,7 @@ button {
 <script>
 
 const quiz = [
-
+// ===== YOUR 50 QUESTIONS (UNCHANGED) =====
 {q:"1. Which state is known as the gateway to North East India?", correct:"assam", options:["manipur","assam","mizoram","nagaland"]},
 {q:"2. Living root bridges are found in:", correct:"meghalaya", options:["nagaland","meghalaya","tripura","mizoram"]},
 {q:"3. Kaziranga National Park is famous for:", correct:"rhinoceros", options:["tiger","elephant","rhinoceros","redpanda"]},
@@ -97,7 +97,6 @@ const quiz = [
 {q:"8. The wettest place on earth, Mawsynram, is in:", correct:"meghalaya", options:["assam","meghalaya","sikkim","manipur"]},
 {q:"9. Ziro Valley is located in:", correct:"arunachal_pradesh", options:["assam","arunachal_pradesh","nagaland","mizoram"]},
 {q:"10. Majuli is famous as the:", correct:"largest_river_island", options:["largest_river_island","largest_lake","hillstation","desert_area"]},
-
 {q:"11. Manas National Park is located in:", correct:"assam", options:["tripura","assam","mizoram","manipur"]},
 {q:"12. Shillong is the capital of:", correct:"meghalaya", options:["assam","manipur","meghalaya","tripura"]},
 {q:"13. Gangtok is the capital of:", correct:"sikkim", options:["nagaland","sikkim","mizoram","tripura"]},
@@ -108,7 +107,6 @@ const quiz = [
 {q:"18. Inner Line Permit (ILP) is required for visiting:", correct:"all_of_these", options:["arunachal_pradesh","nagaland","mizoram","all_of_these"]},
 {q:"19. Sangai Festival is celebrated in:", correct:"manipur", options:["assam","manipur","meghalaya","tripura"]},
 {q:"20. Meghalaya means:", correct:"clouds", options:["rivers","clouds","hills","valleys"]},
-
 {q:"21. The Taj Mahal is located in:", correct:"agra", options:["delhi","jaipur","agra","lucknow"]},
 {q:"22. The Golden Triangle includes:", correct:"delhi_agra_jaipur", options:["delhi_agra_jaipur","delhi_mumbai_kolkata","goa_mumbai_pune","chennai_bengaluru_hyderabad"]},
 {q:"23. 'Incredible India' is the tourism slogan of:", correct:"india", options:["nepal","india","srilanka","bhutan"]},
@@ -119,7 +117,6 @@ const quiz = [
 {q:"28. Jim Corbett National Park is in:", correct:"uttarakhand", options:["uttarakhand","assam","kerala","odisha"]},
 {q:"29. The Sun Temple at Konark is in:", correct:"odisha", options:["gujarat","rajasthan","odisha","punjab"]},
 {q:"30. Gateway of India is located in:", correct:"mumbai", options:["mumbai","kolkata","chennai","kochi"]},
-
 {q:"31. Shimla is the capital of:", correct:"himachal_pradesh", options:["uttarakhand","himachal_pradesh","sikkim","goa"]},
 {q:"32. Darjeeling is famous for:", correct:"tea", options:["coffee","tea","cotton","spices"]},
 {q:"33. The Thar Desert is located in:", correct:"rajasthan", options:["gujarat","rajasthan","haryana","punjab"]},
@@ -130,7 +127,6 @@ const quiz = [
 {q:"38. Charminar is located in:", correct:"hyderabad", options:["chennai","hyderabad","lucknow","bhopal"]},
 {q:"39. The largest state in India by area is:", correct:"rajasthan", options:["maharashtra","madhya_pradesh","rajasthan","uttar_pradesh"]},
 {q:"40. Eco-tourism mainly promotes:", correct:"environmental_conservation", options:["industrial_growth","environmental_conservation","urbanization","mining"]},
-
 {q:"41. 'Dosa' is a traditional dish from which Indian state?", correct:"tamilnadu", options:["punjab","tamilnadu","gujarat","rajasthan"]},
 {q:"42. The main ingredient of 'Sarson ka Saag' is:", correct:"mustard_leaves", options:["spinach","mustard_leaves","cabbage","fenugreek"]},
 {q:"43. 'Rogan Josh' is a famous dish from:", correct:"kashmir", options:["goa","kerala","kashmir","bihar"]},
@@ -139,10 +135,8 @@ const quiz = [
 {q:"46. 'Hyderabadi Biryani' is famous for using:", correct:"dum_cooking", options:["only_vegetables","raw_rice_separate","dum_cooking","steaming"]},
 {q:"47. 'Dhokla' is a popular snack from:", correct:"gujarat", options:["maharashtra","gujarat","punjab","odisha"]},
 {q:"48. 'Litti Chokha' is a traditional dish of:", correct:"bihar", options:["west_bengal","bihar","assam","haryana"]},
-
 {q:"49. Why should we not make loud noises in wildlife areas?", correct:"get_scared", options:["get_sleep","get_scared","get_dance","get_laugh"]},
 {q:"50. What should we do when we see wild animals?", correct:"watch", options:["feed","chase","touch","watch"]}
-
 ];
 
 let current=0;
@@ -160,7 +154,6 @@ function format(name){
   return name.replace(/_/g," ").replace(/\b\w/g,c=>c.toUpperCase());
 }
 
-/* Child voice only for Q49 & Q50 */
 function speak(text){
   let msg=new SpeechSynthesisUtterance(text);
   msg.pitch=1.8;
@@ -203,13 +196,20 @@ function loadQuestion(){
       if(answered) return;
       answered=true;
 
-      if(opt===data.correct){
-        div.classList.add("correct");
-        score++;
-      }else{
+      document.querySelectorAll(".option").forEach(o=>{
+        let txt=o.querySelector("p").textContent;
+        if(txt===format(data.correct)){
+          o.classList.add("correct");
+        }
+      });
+
+      if(opt!==data.correct){
         div.classList.add("wrong");
+      } else {
+        score++;
       }
 
+      answerBtn.textContent=format(data.correct);
       nextBtn.style.display="inline-block";
     };
 

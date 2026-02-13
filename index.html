@@ -49,6 +49,7 @@ body {
   font-weight:bold;
 }
 
+.selected { border-color:yellow; }
 .correct { border-color:lime; }
 .wrong { border-color:red; }
 
@@ -85,7 +86,7 @@ button {
 
 <script>
 
-const quiz = [
+const quiz = [ /* --- YOUR 48 QUESTIONS (UNCHANGED) --- */
 {q:"1. Which state is known as the gateway to North East India?", correct:"assam", options:["manipur","assam","mizoram","nagaland"]},
 {q:"2. Living root bridges are found in:", correct:"meghalaya", options:["nagaland","meghalaya","tripura","mizoram"]},
 {q:"3. Kaziranga National Park is famous for:", correct:"rhinoceros", options:["tiger","elephant","rhinoceros","redpanda"]},
@@ -136,113 +137,106 @@ const quiz = [
 {q:"48. 'Litti Chokha' is a traditional dish of:", correct:"bihar", options:["west_bengal","bihar","assam","haryana"]}
 ];
 
-let current = 0;
-let score = 0;
-let selectedOption = null;
-let answered = false;
+let current=0;
+let score=0;
+let selectedOption=null;
+let answered=false;
 
-const questionEl = document.getElementById("question");
-const optionsEl = document.getElementById("options");
-const nextBtn = document.getElementById("nextBtn");
-const answerBtn = document.getElementById("answerBtn");
-const skipBtn = document.getElementById("skipBtn");
-const scoreEl = document.getElementById("score");
+const questionEl=document.getElementById("question");
+const optionsEl=document.getElementById("options");
+const nextBtn=document.getElementById("nextBtn");
+const answerBtn=document.getElementById("answerBtn");
+const skipBtn=document.getElementById("skipBtn");
+const scoreEl=document.getElementById("score");
 
 function format(name){
   return name.replace(/_/g," ").replace(/\b\w/g,c=>c.toUpperCase());
 }
 
 function loadQuestion(){
-  selectedOption = null;
-  answered = false;
-  nextBtn.style.display = "none";
-  answerBtn.textContent = "Answer";
-  optionsEl.innerHTML = "";
+  selectedOption=null;
+  answered=false;
+  nextBtn.style.display="none";
+  answerBtn.textContent="Answer";
+  optionsEl.innerHTML="";
 
-  let data = quiz[current];
-  questionEl.textContent = data.q;
+  let data=quiz[current];
+  questionEl.textContent=data.q;
 
   data.options.forEach(opt=>{
-    let div = document.createElement("div");
+    let div=document.createElement("div");
     div.classList.add("option");
 
-    let img = document.createElement("img");
-    img.src = "Images/" + opt + ".jpg";
+    let img=document.createElement("img");
+    img.src="Images/"+opt+".jpg";
 
-    let label = document.createElement("p");
-    label.textContent = format(opt);
+    let label=document.createElement("p");
+    label.textContent=format(opt);
 
     div.appendChild(img);
     div.appendChild(label);
 
-    div.onclick = ()=>{
+    div.onclick=()=>{
       if(answered) return;
-      document.querySelectorAll(".option").forEach(o=>o.style.borderColor="transparent");
-      div.style.borderColor="yellow";
-      selectedOption = opt;
+      document.querySelectorAll(".option").forEach(o=>o.classList.remove("selected"));
+      div.classList.add("selected");
+      selectedOption=opt;
     };
 
     optionsEl.appendChild(div);
   });
 }
 
-answerBtn.onclick = ()=>{
+answerBtn.onclick=()=>{
   if(answered) return;
-  answered = true;
+  answered=true;
 
-  let data = quiz[current];
+  let data=quiz[current];
 
-  if(selectedOption){
-    document.querySelectorAll(".option").forEach(div=>{
-      let text = div.querySelector("p").textContent;
+  document.querySelectorAll(".option").forEach(div=>{
+    let text=div.querySelector("p").textContent;
 
-      if(text === format(data.correct)){
-        div.classList.add("correct");
-      }
-
-      if(text === format(selectedOption) && selectedOption !== data.correct){
+    if(selectedOption){
+      if(text===format(selectedOption) && selectedOption!==data.correct){
         div.classList.add("wrong");
       }
-    });
-
-    if(selectedOption === data.correct){
-      score++;
     }
+
+    if(text===format(data.correct)){
+      div.classList.add("correct");
+    }
+  });
+
+  if(selectedOption===data.correct){
+    score++;
   }
 
-  answerBtn.textContent = format(data.correct);
-  nextBtn.style.display = "inline-block";
+  answerBtn.textContent=format(data.correct);
+  nextBtn.style.display="inline-block";
 };
 
-skipBtn.onclick = ()=>{
+skipBtn.onclick=()=>{
   current++;
-  if(current < quiz.length){
-    loadQuestion();
-  } else {
-    finishQuiz();
-  }
+  if(current<quiz.length){ loadQuestion(); }
+  else{ finishQuiz(); }
 };
 
-nextBtn.onclick = ()=>{
+nextBtn.onclick=()=>{
   current++;
-  if(current < quiz.length){
-    loadQuestion();
-  } else {
-    finishQuiz();
-  }
+  if(current<quiz.length){ loadQuestion(); }
+  else{ finishQuiz(); }
 };
 
 function finishQuiz(){
-  questionEl.textContent = "Quiz Completed!";
-  optionsEl.innerHTML = "";
-  answerBtn.style.display = "none";
-  skipBtn.style.display = "none";
-  nextBtn.style.display = "none";
-  scoreEl.textContent = "Your Score: " + score + " / " + quiz.length;
+  questionEl.textContent="Quiz Completed!";
+  optionsEl.innerHTML="";
+  answerBtn.style.display="none";
+  skipBtn.style.display="none";
+  nextBtn.style.display="none";
+  scoreEl.textContent="Your Score: "+score+" / "+quiz.length;
 }
 
 loadQuestion();
-
 </script>
 
 </body>

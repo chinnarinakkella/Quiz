@@ -161,6 +161,39 @@ const quiz = [
 
 {q:"40. Eco-tourism mainly promotes:", correct:"environmental_conservation", options:["industrial_growth","environmental_conservation","urbanization","mining"]}
 
+
+{q:"41. 'Dosa' is a traditional dish from which Indian state?",
+correct:"tamilnadu",
+options:["punjab","tamilnadu","gujarat","rajasthan"]},
+
+{q:"42. The main ingredient of 'Sarson ka Saag' is:",
+correct:"mustard_leaves",
+options:["spinach","mustard_leaves","cabbage","fenugreek"]},
+
+{q:"43. 'Rogan Josh' is a famous dish from:",
+correct:"kashmir",
+options:["goa","kerala","kashmir","bihar"]},
+
+{q:"44. 'Pani Puri' is also commonly known as:",
+correct:"golgappa",
+options:["vada_pav","golgappa","dhokla","kachori"]},
+
+{q:"45. The main ingredient of 'Idli' is:",
+correct:"rice_urad_batter",
+options:["wheat_flour","rice_urad_batter","corn_flour","gram_flour"]},
+
+{q:"46. 'Hyderabadi Biryani' is famous for using:",
+correct:"dum_cooking",
+options:["only_vegetables","raw_rice_separate","dum_cooking","steaming"]},
+
+{q:"47. 'Dhokla' is a popular snack from:",
+correct:"gujarat",
+options:["maharashtra","gujarat","punjab","odisha"]},
+
+{q:"48. 'Litti Chokha' is a traditional dish of:",
+correct:"bihar",
+options:["west_bengal","bihar","assam","haryana"]}
+
 ];
 
 let current=0;
@@ -229,7 +262,7 @@ nextBtn.onclick=()=>{
     optionsEl.innerHTML="";
     resultEl.textContent="";
     nextBtn.style.display="none";
-    scoreEl.textContent="Your Score: "+score+" / 40";
+    scoreEl.textContent="Your Score: "+score+" / "+quiz.length;
   }
 };
 
